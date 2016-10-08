@@ -10,7 +10,7 @@ In covreg2, it is now possible to initialize parameters B1, B2, and A. This is u
 }
 \usage{
 covreg.mcmc(fmean, fcov, data = NULL, R = 1, niter = 10000,
-nthin = 10, nsave = niter/nthin, verb = T)
+nthin = 10, nsave = niter/nthin, verb = T, B1 = NULL, B2 = NULL, A = NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
