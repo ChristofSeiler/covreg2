@@ -95,7 +95,7 @@ b1.save[,,ns/nthin]=B1
 b2.save[,,,ns/nthin]=B2
 a.save[,,ns/nthin]=A
 }
-if (verb==T & ns%%(niter/100)==0)cat(round(ns/niter*100),"% done",date(), "\n")
+if (verb==T) cat("iteration",ns,"of",niter,"done at",date(), "\n")
 }
 
 
