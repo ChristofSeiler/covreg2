@@ -54,6 +54,7 @@ a.save=array(dim=c(p,p,nsave))
 
 
 ## main loop ##
+sink("progress.txt")
 for (ns in 1:niter){
 
 ## full conditionals ##
@@ -110,9 +111,9 @@ b1.save[,,ns/nthin]=B1
 b2.save[,,,ns/nthin]=B2
 a.save[,,ns/nthin]=A
 }
-if (verb==T) cat("iteration",ns,"of",niter,"done at",date(), "\n"); flush.console()
+if (verb==T) cat("iteration ",ns," of ",niter," done at ",date(),"\n")
 }
-
+sink()
 
 return(list(B1.psamp=b1.save,B2.psamp=b2.save,A.psamp=a.save,matrix.mean=X1,matrix.cov=X2))
 }
