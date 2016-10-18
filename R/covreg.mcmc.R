@@ -63,11 +63,26 @@ for(k in sample(1:R)){
 	E<-Y-X1%*%t(B1)
 	#E=Y
     	for(l in (1:R)[-k]) { E<-E-(X2%*% t(B2[,,l]))*G[,l]  }
-    	s2g<-1/( 1+  diag( X2%*%t(B2[,,k])%*%iA%*%B2[,,k]%*%t(X2)) )
-    	eg<-s2g*diag(  X2%*%t(B2[,,k])%*%iA%*%t(E) )
+
+    	# for small n
+    	#s2g<-1/(1 + diag(X2 %*% t(B2[,,k])%*%iA%*%B2[,,k] %*% t(X2)) )
+	    # for large n
+	    X2_tilde <- X2 %*% t(B2[,,k])%*%iA%*%B2[,,k]
+	    s2g <- 1/(1 + sapply(1:nrow(X2_tilde),function(i) X2_tilde[i,] %*% X2[i,]) )
+
+	    # for small n
+	    #eg<-s2g*diag(  X2%*%t(B2[,,k])%*%iA%*%t(E) )
+	    # for large n
+	    X2_tilde <- X2 %*% t(B2[,,k])%*%iA
+    	eg <- s2g * sapply(1:nrow(X2_tilde),function(i) X2_tilde[i,] %*% E[i,])
+
     	G[,k]<-rnorm(n,eg,sqrt(s2g))
 
-    	Xg<-diag(G[,k])%*%X2
+    	# for small n
+    	#Xg<-diag(G[,k])%*%X2
+    	# for large n
+    	Xg<-G[,k]*X2
+
     	Bn<- (t(E)%*%Xg)%*%solve(( t(Xg)%*%Xg + iV02 ) )
     	B2[,,k]<-rmn(Bn, A , solve( t(Xg)%*%Xg + iV02 ))
 }
